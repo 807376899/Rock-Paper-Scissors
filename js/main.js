@@ -22,41 +22,74 @@ function getHumanChoice(){
     return userInput;
 }
 function playRound(humanChoice,computerChoice){
+    rounds++;
     if(humanChoice==computerChoice){
-        console.log("Tie!")
+        showRoundResult("It's a tie!", humanChoice, computerChoice);
     }
     else if(humanChoice=="rock"&&computerChoice=="scissors"||humanChoice=="scissors"&&computerChoice=="paper"||humanChoice=="paper"&&computerChoice=="rock"){
         humanScore++;
-        console.log("You win! "+humanChoice+" beats "+ computerChoice);
+        showRoundResult("You win!", humanChoice, computerChoice);
+
     }
     else{
         computerScore++;
-        console.log("You lose! "+computerChoice+" beats "+ humanChoice);
+        showRoundResult("You lose!", humanChoice, computerChoice);
     }
 
 }
-function playGame(){
+function showRoundResult(result,humanChoice, computerChoice){
+    const roundsDiv = document.querySelector('.rounds');
+    const resultDiv = document.createElement('div');
+    const humanScoreSpan = document.querySelector('#human-score');
+    const computerScoreSpan = document.querySelector('#computer-score');
 
-    for(let i=0;i<5;i++){
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
-        console.log(`human score: ${humanScore}; computer score: ${computerScore}`)
-    }
-    if(humanScore>computerScore){
-        console.log("You win this round!");
-    }
-    else if(humanScore<computerScore){
-        console.log("You lose this round!");
-    }
-    else{
-        console.log("This round is tie!");
-    }
+    resultDiv.className = 'result';
+    resultDiv.textContent = `Round ${rounds}: ${result} - You chose ${humanChoice}, Computer chose ${computerChoice}. 
+    Your score: ${humanScore}, Computer score: ${computerScore}`;
+    roundsDiv.appendChild(resultDiv);
+
+    humanScoreSpan.textContent = humanScore;
+    computerScoreSpan.textContent = computerScore;
 }
-//console.log("human choice:"+getHumanChoice());
-//console.log("computer choice:"+getComputerChoice());
+function resetGame(){
+    const roundsDiv = document.querySelectorAll('.result');
+    const finalResultDiv = document.querySelector('.final-result');
+    roundsDiv.forEach(div => {
+        div.remove();
+    }); 
+    finalResultDiv.textContent = '';
+    humanScore=0;
+    computerScore=0;
+    rounds=0;
+}
 let humanScore=0;
 let computerScore=0;
-playGame();
+let rounds=0;
+let reset=false;
+let buttons=document.querySelector('.buttons');
+buttons.addEventListener('click',(event)=>{
+    let target=event.target;
+    if(reset){
+        resetGame();
+        reset=false;
+    }
+    const computerSelection = getComputerChoice();
+    const humanSelection=target.id;
+    playRound(humanSelection, computerSelection);
+    if(humanScore===5||computerScore===5){
+        const finalResult= document.querySelector('.final-result');
+        if(humanScore===5){
+            finalResult.textContent = `Game Over! You won the game after ${rounds} rounds.
+            click the button to play again.`;
+            reset=true;        
+        }else{
+            finalResult.textContent = `Game Over! You lost the game after ${rounds} rounds.
+            click the button to play again.`;
+            reset=true;
+        }
+        
+    }
+})
+
 
 
