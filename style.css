@@ -10,12 +10,31 @@ button{
     height: 100px;
     font-size: 20px;
     cursor: pointer;
+    background-color: transparent;
+    background-size: cover;
+    background-position: center;
+    border: none;
+}
+#rock{
+    background-image: url(
+        "img/rock.svg");
+    
+}
+#paper{
+    background-image: url(
+        "img/paper.svg");
+}
+#scissors{
+    background-image: url(
+        "img/scissors.svg");
 }
 .score{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
+    font-size: 22px;
+    margin-top: 20px;
 }
 .rounds{
    

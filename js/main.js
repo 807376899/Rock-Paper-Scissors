@@ -81,15 +81,13 @@ buttons.addEventListener('click',(event)=>{
         const promptText = document.createElement('p');
         
         if(humanScore===5){
-            finalResult.textContent = `Game Over! \nYou won the game after ${rounds} rounds.
-            click the button to play again.`;
-            reset=true;        
+            finalResult.textContent = `Game Over! You won the game after ${rounds} rounds.`;       
         }else{
-            finalResult.textContent = `Game Over! \nYou lost the game after ${rounds} rounds.`;
-            promptText.textContent = "Click any button to play again.";
+            finalResult.textContent = `Game Over! You lost the game after ${rounds} rounds.`;
+        }
+        promptText.textContent = "Click any button to play again.";
             finalResult.appendChild(promptText);
             reset=true;
-        }
         
     }
 })
