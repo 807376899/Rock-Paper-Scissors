@@ -46,7 +46,7 @@ function showRoundResult(result,humanChoice, computerChoice){
     resultDiv.className = 'result';
     resultDiv.textContent = `Round ${rounds}: ${result} - You chose ${humanChoice}, Computer chose ${computerChoice}. 
     Your score: ${humanScore}, Computer score: ${computerScore}`;
-    roundsDiv.appendChild(resultDiv);
+    roundsDiv.insertBefore(resultDiv, roundsDiv.firstChild);
 
     humanScoreSpan.textContent = humanScore;
     computerScoreSpan.textContent = computerScore;
@@ -78,13 +78,16 @@ buttons.addEventListener('click',(event)=>{
     playRound(humanSelection, computerSelection);
     if(humanScore===5||computerScore===5){
         const finalResult= document.querySelector('.final-result');
+        const promptText = document.createElement('p');
+        
         if(humanScore===5){
-            finalResult.textContent = `Game Over! You won the game after ${rounds} rounds.
+            finalResult.textContent = `Game Over! \nYou won the game after ${rounds} rounds.
             click the button to play again.`;
             reset=true;        
         }else{
-            finalResult.textContent = `Game Over! You lost the game after ${rounds} rounds.
-            click the button to play again.`;
+            finalResult.textContent = `Game Over! \nYou lost the game after ${rounds} rounds.`;
+            promptText.textContent = "Click any button to play again.";
+            finalResult.appendChild(promptText);
             reset=true;
         }
         
